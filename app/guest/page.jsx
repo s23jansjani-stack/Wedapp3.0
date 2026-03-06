@@ -2,21 +2,27 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 
 export default function GuestPage() {
   const router = useRouter();
   const [guests, setGuests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     async function fetchGuests() {
       try {
         const res = await fetch('/api/guests');
         const data = await res.json();
-        setGuests(data);
+        if (!res.ok) {
+          setError(data.error || 'Neizdevās ielādēt viesus.');
+        } else if (!Array.isArray(data)) {
+          setError('Nezināma servera atbilde.');
+        } else {
+          setGuests(data);
+        }
       } catch (err) {
-        console.error(err);
+        setError('Savienojuma kļūda. Mēģiniet vēlreiz.');
       } finally {
         setLoading(false);
       }
@@ -32,10 +38,13 @@ export default function GuestPage() {
 
       <div className="guest-container">
         {loading ? (
+          <div className="empty-state"><p>Ielādē viesus...</p></div>
+        ) : error ? (
           <div className="empty-state">
-            <p>Ielādē viesus...</p>
+            <h3>Kļūda</h3>
+            <p>{error}</p>
           </div>
-        ) : guests?.length === 0 ? (
+        ) : guests.length === 0 ? (
           <div className="empty-state">
             <h3>Saraksts ir tukšs</h3>
             <p>Esi pirmais, kurš pievienojas!</p>
@@ -46,18 +55,17 @@ export default function GuestPage() {
               <div key={guest.id} className="guest-card">
                 <div className="guest-image-container">
                   <img
-                    src={guest.image_url} 
-                    alt={guest.name} 
+                    src={guest.image_url}
+                    alt={guest.name}
                     className="guest-image"
-                    onError={(e) => { e.target.src = 'https://via.placeholder.com/400x500?text=Nav+Bilde'; }}
                   />
                 </div>
                 <div className="guest-info">
                   <h2 className="guest-name">{guest.name}</h2>
                   <div className="guest-q">Par mani</div>
-                  <p className="guest-a">{guest.bio.split('\n').map((l, i) => <span key={i}>{l}<br/></span>)}</p>
+                  <p className="guest-a">{guest.bio}</p>
                   <div className="guest-q">Visvairāk gaidu</div>
-                  <p className="guest-a">{guest.answers.split('\n').map((l, i) => <span key={i}>{l}<br/></span>)}</p>
+                  <p className="guest-a">{guest.answers}</p>
                 </div>
               </div>
             ))}
