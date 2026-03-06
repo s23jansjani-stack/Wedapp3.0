@@ -1,0 +1,359 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #111111;
+  --primary-color: #a8b5a0;
+  --primary-dark: #8a9683;
+  --secondary-color: #f0f0f0;
+  --secondary-dark: #e0e0e0;
+  --border-color: #dddddd;
+  --card-bg: #fafafa;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.landing-body {
+  display: flex;
+  justify-content: center;
+  background-color: var(--bg-color);
+  height: 100%;
+}
+
+.landing-container {
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px;
+}
+
+.landing-header {
+  text-align: center;
+  margin-bottom: 24px;
+  margin-top: 10px;
+}
+
+.landing-header h1 {
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.carousel-container {
+  flex: 1;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  background-color: var(--secondary-color);
+}
+
+.carousel-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+
+.carousel-item {
+  flex: 0 0 100%;
+  height: 100%;
+  scroll-snap-align: center;
+  background-size: cover;
+  background-position: center;
+}
+
+.landing-subheading {
+  text-align: center;
+  margin: 24px 0;
+}
+
+.landing-subheading p {
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 2px;
+  color: #555;
+}
+
+.landing-actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.btn {
+  flex: 1;
+  padding: 16px 0;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn:hover { opacity: 0.9; }
+.btn:active { transform: scale(0.98); }
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+
+.btn-small {
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 400;
+  border-radius: 8px;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border: none;
+  cursor: pointer;
+}
+
+.page-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 20px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.scrollable-page {
+  width: 100%;
+  max-width: 500px;
+  height: 100vh;
+  height: 100dvh;
+  margin: 0 auto;
+  overflow-y: auto;
+  padding: 70px 20px 40px;
+  background-color: var(--bg-color);
+  position: relative;
+}
+
+.form-title {
+  font-size: 24px;
+  font-weight: 300;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 16px;
+  background-color: var(--card-bg);
+  transition: border-color 0.2s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background-color: #fff;
+}
+
+textarea.form-control {
+  min-height: 100px;
+  resize: none;
+}
+
+.image-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px dashed var(--border-color);
+  border-radius: 16px;
+  padding: 30px 20px;
+  text-align: center;
+  cursor: pointer;
+  background-color: var(--card-bg);
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.image-upload-container.has-image {
+  border-style: solid;
+  padding: 0;
+}
+
+.image-upload-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.upload-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+  color: var(--primary-color);
+}
+
+.image-preview {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.submit-btn {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.loader {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.guest-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--card-bg);
+}
+
+.guest-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.guest-track::-webkit-scrollbar { display: none; }
+
+.guest-card {
+  flex: 0 0 100%;
+  height: 100%;
+  scroll-snap-align: center;
+  padding: 0 20px 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.guest-image-container {
+  width: 100%;
+  height: 45%;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  flex-shrink: 0;
+}
+
+.guest-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.guest-info {
+  flex: 1;
+  overflow-y: auto;
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  margin-bottom: 20px;
+}
+
+.guest-name {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--primary-dark);
+}
+
+.guest-q {
+  font-size: 13px;
+  font-weight: 600;
+  color: #888;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.guest-a {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+  color: #333;
+}
+.guest-a:last-child { margin-bottom: 0; }
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  padding: 40px;
+  text-align: center;
+  color: #888;
+}
+
+.empty-state h3 {
+  margin-bottom: 12px;
+  color: var(--text-color);
+}
