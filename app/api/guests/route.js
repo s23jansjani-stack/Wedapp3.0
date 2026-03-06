@@ -1,10 +1,11 @@
-import { sql } from '@vercel/postgres';
+import { neon } from '@neondatabase/serverless';
 import { put } from '@vercel/blob';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const { rows } = await sql`SELECT * FROM guests ORDER BY created_at DESC`;
+    const sql = neon(process.env.DATABASE_URL);
+    const rows = await sql`SELECT * FROM guests ORDER BY created_at DESC`;
     return NextResponse.json(rows);
   } catch (error) {
     console.error('Failed to fetch guests', error);
@@ -24,12 +25,11 @@ export async function POST(request) {
       return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
     }
 
-    // Upload to Vercel Blob
-    const blob = await put(image.name, image, {
-      access: 'public',
-    });
+    // Upload image to Vercel Blob
+    const blob = await put(image.name, image, { access: 'public' });
 
-    // Save to Vercel Postgres
+    // Save to Neon Postgres
+    const sql = neon(process.env.DATABASE_URL);
     await sql`
       INSERT INTO guests (name, bio, answers, image_url)
       VALUES (${name}, ${bio}, ${answers}, ${blob.url})

@@ -1,9 +1,10 @@
-import { sql } from '@vercel/postgres';
+import { neon } from '@neondatabase/serverless';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const result = await sql`
+    const sql = neon(process.env.DATABASE_URL);
+    await sql`
       CREATE TABLE IF NOT EXISTS guests (
         id SERIAL PRIMARY KEY,
         name VARCHAR(255) NOT NULL,

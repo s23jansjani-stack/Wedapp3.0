@@ -1,8 +1,7 @@
 'use client';
 
-import { useState } from 'next';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 
 export default function FormPage() {
   const router = useRouter();
@@ -15,16 +14,17 @@ export default function FormPage() {
     if (selected) {
       setFile(selected);
       const reader = new FileReader();
-      reader.onload = (e) => {
-        setPreview(e.target.result);
-      };
+      reader.onload = (ev) => setPreview(ev.target.result);
       reader.readAsDataURL(selected);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!file) return;
+    if (!file) {
+      alert('Lūdzu, pievienojiet bildi!');
+      return;
+    }
 
     setLoading(true);
 
@@ -45,10 +45,10 @@ export default function FormPage() {
       } else {
         const err = await response.json();
         alert(`Kļūda: ${err.error}`);
+        setLoading(false);
       }
     } catch (error) {
       alert('Neizdevās saglabāt datus!');
-    } finally {
       setLoading(false);
     }
   };
@@ -63,13 +63,13 @@ export default function FormPage() {
         <h2 className="form-title">Pievienoties sarakstam</h2>
         
         <form onSubmit={handleSubmit}>
-          <div className={`image-upload-container ${preview ? 'has-image' : ''}`}>
-            <input 
-              type="file" 
-              accept="image/*" 
-              className="image-upload-input" 
-              onChange={handleFileChange} 
-              required 
+          <div className={`image-upload-container${preview ? ' has-image' : ''}`}>
+            <input
+              type="file"
+              accept="image/*"
+              className="image-upload-input"
+              onChange={handleFileChange}
+              required
             />
             {!preview ? (
               <div>
@@ -97,7 +97,7 @@ export default function FormPage() {
           </div>
 
           <button type="submit" className="btn btn-primary submit-btn" disabled={loading}>
-            {loading ? <div className="loader" style={{margin: '0 auto'}}></div> : <span>Saglabāt</span>}
+            {loading ? <div className="loader"></div> : <span>Saglabāt</span>}
           </button>
         </form>
       </div>
